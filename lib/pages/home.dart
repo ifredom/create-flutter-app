@@ -13,10 +13,11 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   List<Widget> _list = List();
   List<BottomNavigationBarItem> _bottomTabs = [];
+  String _tabTitle = '';
   List tabData = [
-    {'title': Text('首页'), 'icon': Icon(Icons.home)},
-    {'title': Text('活动'), 'icon': Icon(Icons.nature)},
-    {'title': Text('我的'), 'icon': Icon(Icons.mail_outline)},
+    {'title': '首页', 'icon': Icon(Icons.home)},
+    {'title': '活动', 'icon': Icon(Icons.nature)},
+    {'title': '我的', 'icon': Icon(Icons.mail_outline)},
   ];
 
   @override
@@ -24,11 +25,13 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     print('widget.userInfo');
 
+    _tabTitle = tabData[0]['title'];
+
     _list..add(FirstPage())..add(ActivityPage())..add(MinePage());
     for (var i = 0; i < tabData.length; i++) {
       _bottomTabs.add(BottomNavigationBarItem(
+        title: Text(tabData[i]['title']),
         icon: tabData[i]['icon'],
-        title: tabData[i]['title'],
       ));
     }
     print(_bottomTabs.length);
@@ -52,7 +55,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            '首页',
+            _tabTitle,
             style: TextStyle(
               fontSize: 18.0,
             ),
@@ -75,6 +78,7 @@ class _HomePageState extends State<HomePage> {
   void _itemTapped(int index) {
     setState(() {
       _currentIndex = index;
+      _tabTitle = tabData[index]['title'];
     });
   }
 }
